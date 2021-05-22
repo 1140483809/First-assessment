@@ -56,3 +56,5 @@
         GET
 	//http://localhost:8080/user/:id  id为用户名即username  显示id的发布的
         GET
+
+student是lv2
