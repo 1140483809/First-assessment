@@ -132,6 +132,10 @@ func main()  {
 
 	//用户
 	//http://localhost:8080/user/register  注册
+	//{
+	//  "username":,
+	//  "password":
+	// }
 	routegroup.POST("/register", register)
 	//http://localhost:8080/user/login   登录
 	routegroup.POST("login",login)
@@ -142,6 +146,7 @@ func main()  {
 		return
 	})
 	//http://localhost:8080/user/revise   修改密码
+	//
 	routegroup.POST("/revise",revise)
 
 
@@ -165,7 +170,7 @@ func main()  {
 	routegroup.POST("/comment/com/:pid",com_com)
 	//http://localhost:8080/user/comment_dianzan/:pid   给pid点赞
 	routegroup.GET("comment_dianzan/:pid",c_dianzan)
-	//http://localhost:8080/user/:id  id为用户名即username  显示id的发布的
+	//http://localhost:8080/user/display/:id  id为用户名即username  显示id的发布的
 	routegroup.GET("/display/:id",display)
 
 	//显示SQL操作
@@ -184,6 +189,10 @@ func a_shoucang(context *gin.Context) {
 	sc.S_aid , err1 = strconv.Atoi(s_id)
 	if err1 != nil {
 		log.Fatal(err1.Error())
+		return
+	}
+	if sc.S_name != yhm{
+		context.Writer.WriteString("请先登录!")
 		return
 	}
 	engine_sql.Insert(sc)
@@ -435,6 +444,10 @@ func revise(context *gin.Context) {
 	user := new(user)
 	if err := context.BindJSON(user); err != nil {
 		log.Fatal(err.Error())
+		return
+	}
+	if user.Username != yhm{
+		context.Writer.WriteString("请先登录!")
 		return
 	}
 	_ , err := engine_sql.Id(user.Username).Update(user)
